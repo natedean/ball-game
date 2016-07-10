@@ -1,3 +1,7 @@
 <h1>
   {{title}}
 </h1>
+<button class="button" (click)="click$.next()">I AM A BUTTON</button>
+<div *ngFor="let ball of ball$ | async">
+  <div class='dot' [style.left]="ball.xPos + 'px'" [style.top]="ball.yPos + 'px'"></div>
+</div>
