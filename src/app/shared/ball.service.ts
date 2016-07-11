@@ -6,22 +6,39 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/merge';
 
 @Injectable()
 export class BallService {
 
-  private change$ = new Subject;
+  public removeBall$ = new Subject()
+    .map((x: string) => state => {
+      delete state[x];
 
-  public ball$ = Observable.interval(1000)
-                  .map(this.createBall)
-                  .do((x) => console.log(x))
-                  .scan((acc, x) => acc.concat([x]), []);
+      return Object.assign({}, state);
+    })
+
+  public createBall$ = Observable.interval(3000)
+                  .map((x) => (state) => {
+                    var ball = {};
+
+                    ball[x] = this.createBall();
+
+                    return Object.assign({}, state, ball);
+                  });
+
+
+  public ball$ = Observable.merge(
+    this.removeBall$, this.createBall$
+  ).scan((state, changeFn) => changeFn(state), {});
+
+
+
 
   constructor() {}
 
-  createBall (x) {
+  createBall () {
     return {
-      id: x,
       xPos: Math.floor(window.innerWidth * Math.random()),
       yPos: Math.floor(window.innerHeight * Math.random())
     }

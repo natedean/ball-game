@@ -22,10 +22,19 @@ import 'rxjs/add/operator/mapTo';
 })
 export class RxTestsAppComponent implements OnInit {
   title = 'rx-tests works!';
-  ball$;
+  ballMap;
+  ballIds;
+  removeBall$;
 
-  constructor(_ballService: BallService) {
-    this.ball$ = _ballService.ball$;
+  constructor(ballService: BallService) {
+    this.removeBall$ = ballService.removeBall$;
+
+    ballService.ball$.subscribe(x => {
+      this.ballMap = x;
+      this.ballIds = Object.keys(x);
+
+      console.log(this.ballMap, this.ballIds);
+    });
   }
 
   ngOnInit () {
