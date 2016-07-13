@@ -31,11 +31,11 @@ export class BallService {
 
   constructor() {}
 
-  createBall () {
-    return {
+  private createBall () {
+    return Immutable.Map({
       xPos: Math.floor(window.innerWidth * Math.random()),
       yPos: Math.floor(window.innerHeight * Math.random())
-    }
+    })
   }
 
 

@@ -4,7 +4,7 @@
 <button class="button" (click)="removeBall$.next()">I AM A BUTTON</button>
 <div *ngFor="let id of ballList$ | async">
   <div class='dot' 
-      [style.left]="ballMap.get(id).xPos + 'px'" 
-      [style.top]="ballMap.get(id).yPos + 'px'"
+      [style.left]="ballMap.getIn([id, 'xPos']) + 'px'" 
+      [style.top]="ballMap.getIn([id, 'yPos']) + 'px'"
       (click)="removeBall$.next(id)"></div>
 </div>

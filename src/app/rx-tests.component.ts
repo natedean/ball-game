@@ -34,7 +34,9 @@ export class RxTestsAppComponent implements OnInit {
     
     this.ballList$ = ballService.ballList$;
 
-    ballService.ballMap$.subscribe(x => this.ballMap = x);
+    ballService.ballMap$.subscribe(x => {
+      this.ballMap = x;
+    });
 
 
   }
