@@ -20,7 +20,6 @@ import 'rxjs/add/operator/mapTo';
   templateUrl: 'rx-tests.component.html',
   styleUrls: ['rx-tests.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
-
 })
 export class RxTestsAppComponent implements OnInit {
   title = 'rx-tests works!';
@@ -31,14 +30,11 @@ export class RxTestsAppComponent implements OnInit {
   constructor(ballService: BallService) {
     this.removeBall$ = ballService.removeBall$;
 
-    
     this.ballList$ = ballService.ballList$;
 
     ballService.ballMap$.subscribe(x => {
       this.ballMap = x;
     });
-
-
   }
 
   ngOnInit () {

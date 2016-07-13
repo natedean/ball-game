@@ -29,8 +29,6 @@ export class BallService {
 
   public ballList$ = this.ballMap$.map(x => x.keys());
 
-  constructor() {}
-
   private createBall () {
     return Immutable.Map({
       xPos: Math.floor(window.innerWidth * Math.random()),
@@ -38,5 +36,5 @@ export class BallService {
     })
   }
 
-
+  constructor() {}
 }
