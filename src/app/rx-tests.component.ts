@@ -19,27 +19,24 @@ import 'rxjs/add/operator/mapTo';
   providers: [BallService],
   templateUrl: 'rx-tests.component.html',
   styleUrls: ['rx-tests.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 
 })
 export class RxTestsAppComponent implements OnInit {
   title = 'rx-tests works!';
   ballMap;
-  ballIds;
+  ballList$;
   removeBall$;
 
   constructor(ballService: BallService) {
     this.removeBall$ = ballService.removeBall$;
 
+    
+    this.ballList$ = ballService.ballList$;
 
-    // this works... but not if change detection is OnPush
-    // TODO: Refactor move keys array to the service and get OnPush working!
-    ballService.ball$.subscribe(x => {
-      this.ballMap = x;
-      this.ballIds = x.keys();
+    ballService.ballMap$.subscribe(x => this.ballMap = x);
 
-      console.log(this.ballMap, this.ballIds);
-    });
+
   }
 
   ngOnInit () {

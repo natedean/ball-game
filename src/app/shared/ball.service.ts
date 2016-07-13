@@ -23,13 +23,11 @@ export class BallService {
                     return state.set(x, this.createBall());
                   });
 
-
-  public ball$ = Observable.merge(
+  public ballMap$ = Observable.merge(
     this.removeBall$, this.createBall$
   ).scan((state, changeFn) => changeFn(state), Immutable.Map());
 
-
-
+  public ballList$ = this.ballMap$.map(x => x.keys());
 
   constructor() {}
 
