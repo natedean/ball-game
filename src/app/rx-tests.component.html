@@ -4,7 +4,7 @@
 <button class="button" (click)="removeBall$.next()">I AM A BUTTON</button>
 <div *ngFor="let id of ballIds">
   <div class='dot' 
-      [style.left]="ballMap[id].xPos + 'px'" 
-      [style.top]="ballMap[id].yPos + 'px'"
+      [style.left]="ballMap.get(id).xPos + 'px'" 
+      [style.top]="ballMap.get(id).yPos + 'px'"
       (click)="removeBall$.next(id)"></div>
 </div>

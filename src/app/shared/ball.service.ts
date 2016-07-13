@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
+import * as Immutable from 'immutable';
+
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -13,24 +15,18 @@ export class BallService {
 
   public removeBall$ = new Subject()
     .map((x: string) => state => {
-      delete state[x];
-
-      return Object.assign({}, state);
+      return state.delete(x);
     })
 
   public createBall$ = Observable.interval(3000)
                   .map((x) => (state) => {
-                    var ball = {};
-
-                    ball[x] = this.createBall();
-
-                    return Object.assign({}, state, ball);
+                    return state.set(x, this.createBall());
                   });
 
 
   public ball$ = Observable.merge(
     this.removeBall$, this.createBall$
-  ).scan((state, changeFn) => changeFn(state), {});
+  ).scan((state, changeFn) => changeFn(state), Immutable.Map());
 
 
 

@@ -3,10 +3,14 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+    'immutable': 'vendor/immutable/dist/immutable.min.js'
 };
 
 /** User packages configuration. */
 const packages: any = {
+    'immutable': {
+        format: 'cjs'    
+    }
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
