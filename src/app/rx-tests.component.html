@@ -1,9 +1,20 @@
 <h1>
   {{title}}
 </h1>
-<div *ngFor="let id of ballList$ | async">
-  <div class='dot' 
+<!--<div *ngFor="let ball of Object.keys(ballMap$) | async">-->
+  <!--<div class='dot' 
       [style.left]="ballMap.getIn([id, 'xPos']) + 'px'" 
       [style.top]="ballMap.getIn([id, 'yPos']) + 'px'"
-      (click)="removeBall$.next(id)"></div>
+      (click)="removeBall$.next(id)"></div>-->
+      <!--<div>whatever</div>
+      <div>{{ ball | json }}</div>-->
+<!--</div>-->
+<input type="range" value="100" (input)="removeState$.next($event.target.value)">
+<div *ngFor="let ball of ballList$ | async">
+    <div class='dot' 
+      [style.left]="ball.xPos + 'px'" 
+      [style.top]="ball.yPos + 'px'"
+      (click)="removeBall$.next(ball.id)">
+    </div>
+    <div>{{ ball | json }}</div>
 </div>

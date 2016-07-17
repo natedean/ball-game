@@ -26,12 +26,22 @@ export class RxTestsAppComponent implements OnInit {
   ballMap;
   ballList$;
   removeBall$;
+  ballMap$;
+  removeState$;
 
   constructor(ballService: BallService) {
     this.removeBall$ = ballService.removeBall$;
+    this.removeState$ = ballService.resetState$;
+    this.ballMap$ = ballService.ballMap$;
 
-    this.ballList$ = ballService.ballList$;
+    this.ballList$ = ballService.ballMap$.map((x) => {
+      return Object.keys(x).map((key) => Object.assign({}, x[key], { id: key }));
+    });
+  }
 
-    ballService.ballMap$.subscribe(x => this.ballMap = x); //unwrap ballMap
+  ngOnInit() {}
+
+  test(e) {
+    console.log(`range val: ${e.target.value}`)
   }
 }

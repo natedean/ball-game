@@ -15,25 +15,34 @@ export class BallService {
 
   public removeBall$ = new Subject()
     .map((x: string) => state => {
-      return state.delete(x);
+      delete state[x];
+
+      return Object.assign({}, state);
     })
+
+  public resetState$ = new Subject()
+    .map((x: number) => state => {
+      return {};
+    });   
 
   public createBall$ = Observable.interval(3000)
                   .map((x) => (state) => {
-                    return state.set(x, this.createBall());
+                    const newBall = {};
+
+                    newBall[x] = this.createBall();
+
+                    return Object.assign({}, state, newBall);
                   });
 
   public ballMap$ = Observable.merge(
-    this.removeBall$, this.createBall$
-  ).scan((state, changeFn) => changeFn(state), Immutable.Map());
-
-  public ballList$ = this.ballMap$.map(x => x.keys());
+    this.removeBall$, this.createBall$, this.resetState$
+  ).scan((state, changeFn) => changeFn(state), {});
 
   private createBall () {
-    return Immutable.Map({
+    return {
       xPos: Math.floor(window.innerWidth * Math.random()),
       yPos: Math.floor(window.innerHeight * Math.random())
-    })
+    }
   }
 
   constructor() {}
